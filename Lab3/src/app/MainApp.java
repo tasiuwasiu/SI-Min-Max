@@ -1,6 +1,8 @@
 package app;
+
 import java.io.IOException;
 
+import app.model.GameHelper;
 import app.view.ButtonController;
 import app.view.GameAreaController;
 import javafx.application.Application;
@@ -9,8 +11,6 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.*;
-
 
 public class MainApp extends Application {
 	
@@ -18,18 +18,17 @@ public class MainApp extends Application {
 	private BorderPane rootLayout;
 	GameAreaController gameController;
 	ButtonController buttonController;
-	int size=0;
+	GameHelper gHelper;
 	
 	@Override
 	public void start(Stage primaryStage) 
 	{
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Stratego");
-		
+		gHelper = new GameHelper();
 		initRoot();
 		initButtons();
 		initGamePanel();
-	
 	}
 	
 	private void initRoot()
@@ -38,7 +37,6 @@ public class MainApp extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/RootLayout.fxml"));
 			rootLayout = (BorderPane) loader.load();
-			
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
 			primaryStage.show();
@@ -58,7 +56,8 @@ public class MainApp extends Application {
 			AnchorPane buttonLayout = (AnchorPane) loader.load();
 			rootLayout.setRight(buttonLayout);
 			buttonController = loader.getController();
-			buttonController.setApp(this);
+			buttonController.setApp(this, gHelper);
+			gHelper.setBController(buttonController);
 		}
 		catch (IOException e)
 		{
@@ -75,8 +74,8 @@ public class MainApp extends Application {
 			AnchorPane gamePanel = (AnchorPane) loader.load();
 			rootLayout.setLeft(gamePanel);
 			gameController = loader.getController();
-			gameController.setApp(this);
-		
+			gameController.setApp(this, gHelper);
+			gHelper.setGController(gameController);
 		}
 		catch (IOException e)
 		{	
@@ -86,7 +85,7 @@ public class MainApp extends Application {
 	
 	public void setGameSize(int number)
 	{
-		size = number;
+		gHelper.setSize(number);
 		gameController.drawLines(number);
 	}
 	

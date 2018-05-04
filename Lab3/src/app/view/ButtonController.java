@@ -1,9 +1,11 @@
 package app.view;
 
 import app.MainApp;
+import app.model.GameHelper;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 public class ButtonController
 {
@@ -14,7 +16,11 @@ public class ButtonController
 	@FXML
 	TextField tf_size;
 	
+	@FXML
+	Text t_player;
+	
 	MainApp application=null;
+	GameHelper gHelper;
 	
 	@FXML
 	private void initialize()
@@ -42,9 +48,21 @@ public class ButtonController
 		application.setGameSize(getSize());
 	}
 	
-	public void setApp(MainApp app)
+	@FXML
+	private void onEnter()
+	{
+		handleSizeSet();
+	}
+	
+	public void setApp(MainApp app, GameHelper h)
 	{
 		application = app;
+		gHelper = h;
+	}
+	
+	public void setPlayer(String name)
+	{
+		t_player.setText(name);
 	}
 
 }
