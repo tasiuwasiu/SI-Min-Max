@@ -18,12 +18,12 @@
             <Font size="15.0" />
          </font>
       </Text>
-      <Button layoutX="29.0" layoutY="594.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="242.0" text="Ruch Alfa/Beta">
+      <Button fx:id="but_alfa_beta" layoutX="29.0" layoutY="594.0" mnemonicParsing="false" onAction="#alfaBetaMove" prefHeight="42.0" prefWidth="242.0" text="Ruch Alfa/Beta">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Button layoutX="29.0" layoutY="512.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="242.0" text="Ruch MinMax">
+      <Button fx:id="but_min_max" layoutX="29.0" layoutY="512.0" mnemonicParsing="false" onAction="#minMaxMove" prefHeight="42.0" prefWidth="242.0" text="Ruch MinMax">
          <font>
             <Font size="16.0" />
          </font>
@@ -33,7 +33,7 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Text layoutX="243.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+      <Text fx:id="t_green_player_score" layoutX="243.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
          <font>
             <Font size="20.0" />
          </font>
@@ -43,7 +43,7 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Text layoutX="243.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+      <Text fx:id="t_red_player_score" layoutX="243.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
          <font>
             <Font size="20.0" />
          </font>
@@ -53,7 +53,7 @@
             <Font size="20.0" />
          </font>
       </Text>
-      <Text layoutX="199.0" layoutY="465.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+      <Text fx:id="t_time" layoutX="199.0" layoutY="465.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
          <font>
             <Font size="20.0" />
          </font>

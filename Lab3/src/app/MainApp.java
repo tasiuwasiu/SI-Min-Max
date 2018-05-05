@@ -29,6 +29,7 @@ public class MainApp extends Application {
 		initRoot();
 		initButtons();
 		initGamePanel();
+		gHelper.setSize(5);
 	}
 	
 	private void initRoot()

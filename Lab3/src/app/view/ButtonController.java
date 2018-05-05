@@ -14,10 +14,25 @@ public class ButtonController
 	Button but_size;
 	
 	@FXML
+	Button but_min_max;
+	
+	@FXML
+	Button but_alfa_beta;
+	
+	@FXML
 	TextField tf_size;
 	
 	@FXML
 	Text t_player;
+	
+	@FXML
+	Text t_red_player_score;
+	
+	@FXML
+	Text t_green_player_score;
+	
+	@FXML
+	Text t_time;
 	
 	MainApp application=null;
 	GameHelper gHelper;
@@ -54,6 +69,18 @@ public class ButtonController
 		handleSizeSet();
 	}
 	
+	@FXML
+	private void minMaxMove()
+	{	
+		gHelper.computerMove(GameHelper.MIN_MAX);
+	}
+	
+	@FXML
+	private void alfaBetaMove()
+	{
+		gHelper.computerMove(GameHelper.ALFA_BETA);
+	}
+	
 	public void setApp(MainApp app, GameHelper h)
 	{
 		application = app;
@@ -63,6 +90,21 @@ public class ButtonController
 	public void setPlayer(String name)
 	{
 		t_player.setText(name);
+	}
+	
+	public void setGreenPlayerScore(String score)
+	{
+		t_green_player_score.setText(score);
+	}
+	
+	public void setRedPlayerScore(String score)
+	{
+		t_red_player_score.setText(score);
+	}
+	
+	public void setTime(String time)
+	{
+		t_time.setText(time);
 	}
 
 }
