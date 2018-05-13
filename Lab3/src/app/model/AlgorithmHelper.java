@@ -4,15 +4,16 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class AlgorithmHelper
 {
-
-	private int[][] tokenTable;
-	private int currentPlayer;
 	private int size;
+	private int[][] tokenTable;
+	
+	private int currentPlayer;
 	private int xPos;
 	private int yPos;
-	private long time;
+	
 	private AlfaBetaAlgorithm abAlgorithm;
 	private MinMaxAlgorithm mmAlgorithm;
+	private long time;
 	
 	public AlgorithmHelper()
 	{
@@ -26,23 +27,23 @@ public class AlgorithmHelper
 	{
 		size = s;
 		currentPlayer = p;
-		tokenTable=new int[size][size];
-		for (int i=0; i<s; i++)
-			for (int j=0; j<s; j++)
-				tokenTable[i][j]=t[i][j];
+		tokenTable = new int[size][size];
+		for (int i = 0; i < s; i++)
+			for (int j = 0; j < s; j++)
+				tokenTable[i][j] = t[i][j];
 		time = 0;
 	}
 	
 	public void calculate(int code)
 	{
-		if(code==GameHelper.MIN_MAX)
+		if(code == GameHelper.MIN_MAX)
 		{
 			xPos = ThreadLocalRandom.current().nextInt(0,size);
 			yPos = ThreadLocalRandom.current().nextInt(0,size);
 			time = 1000;
 		}
 		else
-			if (code==GameHelper.ALFA_BETA)
+			if (code == GameHelper.ALFA_BETA)
 			{
 				xPos = ThreadLocalRandom.current().nextInt(0,size);
 				yPos = ThreadLocalRandom.current().nextInt(0,size);

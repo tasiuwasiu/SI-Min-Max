@@ -8,7 +8,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-
 public class GameAreaController
 {
 	@FXML
@@ -45,7 +44,7 @@ public class GameAreaController
 		gContext.setStroke(Color.BLACK);
 		gContext.setLineWidth(3);
 		gContext.strokeRect(0, 0, 700, 700);
-		for (int i=1; i<size; i++)
+		for (int i = 1; i < size; i++)
 		{
 			gContext.strokeLine(i*columnSize, 0, i*columnSize, 700);
 			gContext.strokeLine(0, i*columnSize, 700, i*columnSize);				

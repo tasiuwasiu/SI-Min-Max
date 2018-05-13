@@ -16,9 +16,9 @@ public class MainApp extends Application {
 	
 	private Stage primaryStage;
 	private BorderPane rootLayout;
-	GameAreaController gameController;
-	ButtonController buttonController;
-	GameHelper gHelper;
+	private GameAreaController gameController;
+	private ButtonController buttonController;
+	private GameHelper gHelper;
 	
 	@Override
 	public void start(Stage primaryStage) 

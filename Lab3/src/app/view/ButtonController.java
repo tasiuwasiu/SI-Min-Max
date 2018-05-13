@@ -34,7 +34,7 @@ public class ButtonController
 	@FXML
 	Text t_time;
 	
-	MainApp application=null;
+	MainApp application;
 	GameHelper gHelper;
 	
 	@FXML
@@ -45,7 +45,7 @@ public class ButtonController
 	
 	private int getSize()
 	{
-		int x=0;
+		int x = 0;
 		try
 		{
 			x = Integer.parseInt(tf_size.getText());
