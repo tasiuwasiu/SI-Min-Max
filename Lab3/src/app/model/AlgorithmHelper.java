@@ -51,6 +51,15 @@ public class AlgorithmHelper
 			}
 	}
 	
+	public void setTreeSize(int s)
+	{
+		if (s>0)
+		{	
+			mmAlgorithm.setTreeSize(s);
+			abAlgorithm.setTreeSize(s);
+		}
+	}
+	
 	public int getXPosition()
 	{
 		return xPos;

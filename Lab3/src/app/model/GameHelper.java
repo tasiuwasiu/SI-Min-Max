@@ -1,9 +1,5 @@
 package app.model;
 
-import java.util.function.Predicate;
-
-import javax.naming.SizeLimitExceededException;
-
 import app.view.ButtonController;
 import app.view.GameAreaController;
 import javafx.scene.paint.Color;
@@ -287,4 +283,15 @@ public class GameHelper
 		return points==1?0:points;
 	}
 	
+	public void finishGameAsComputer (int code)
+	{
+		while (freeTokens>0)
+			computerMove(code);
+	}
+	
+	public void setTreeSize(int s)
+	{
+		aHelper.setTreeSize(s);	
+		System.out.println("Tree size: " + s);
+	}
 }

@@ -2,8 +2,11 @@ package app.view;
 
 import app.MainApp;
 import app.model.GameHelper;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
@@ -20,6 +23,12 @@ public class ButtonController
 	Button but_alfa_beta;
 	
 	@FXML
+	Button but_finish_min_max;
+	
+	@FXML
+	Button but_finish_alfa_beta;
+	
+	@FXML
 	TextField tf_size;
 	
 	@FXML
@@ -34,13 +43,25 @@ public class ButtonController
 	@FXML
 	Text t_time;
 	
+	@FXML
+	ChoiceBox<Integer> cb_tree_size;
+	
 	MainApp application;
 	GameHelper gHelper;
 	
 	@FXML
 	private void initialize()
 	{
-		
+		cb_tree_size.getItems().removeAll(cb_tree_size.getItems());
+		cb_tree_size.getItems().addAll(3,4,5,6,7);
+		cb_tree_size.getSelectionModel().select(0);
+		cb_tree_size.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observableValue, Number number, Number number2)
+			{
+				gHelper.setTreeSize(cb_tree_size.getItems().get((Integer) number2));
+			}
+		});
 	}
 	
 	private int getSize()
@@ -79,6 +100,18 @@ public class ButtonController
 	private void alfaBetaMove()
 	{
 		gHelper.computerMove(GameHelper.ALFA_BETA);
+	}
+	
+	@FXML
+	private void minMaxfinish()
+	{
+		gHelper.finishGameAsComputer(GameHelper.MIN_MAX);
+	}
+	
+	@FXML
+	private void alfaBetaFinish()
+	{
+		gHelper.finishGameAsComputer(GameHelper.ALFA_BETA);
 	}
 	
 	public void setApp(MainApp app, GameHelper h)
