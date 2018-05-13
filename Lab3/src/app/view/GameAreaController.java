@@ -1,6 +1,5 @@
 package app.view;
 
-import app.MainApp;
 import app.model.GameHelper;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -12,8 +11,7 @@ public class GameAreaController
 {
 	@FXML
 	private Canvas drawArea;
-	
-	private MainApp application;
+
 	private GameHelper gHelper;
 	
 	private GraphicsContext gContext;
@@ -30,9 +28,8 @@ public class GameAreaController
 		});
 	}
 	
-	public void setApp(MainApp app, GameHelper ga)
+	public void setApp(GameHelper ga)
 	{
-		application = app;
 		gHelper = ga;
 	}
 	

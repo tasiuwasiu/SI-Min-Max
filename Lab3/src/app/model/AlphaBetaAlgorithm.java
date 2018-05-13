@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 
-public class MinMaxAlgorithm
+public class AlphaBetaAlgorithm
 {
 	
 	
@@ -13,21 +13,21 @@ public class MinMaxAlgorithm
 	private int changedY;
 	private int tableValue;
 	private int[][] tokenTable;
-	private List<MinMaxAlgorithm> nextPossibilities;
+	private List<AlphaBetaAlgorithm> nextPossibilities;
 	
-	public MinMaxAlgorithm(int[][] tTable, int currentPlayer, int size, int treeSize)
+	public AlphaBetaAlgorithm(int[][] tTable, int currentPlayer, int size, int treeSize)
 	{
 		tokenTable = new int[size][size];
 		for (int i = 0; i < size; i++)
 			for (int j = 0; j < size; j++)
 				tokenTable[i][j] = tTable[i][j];
 		createPossibilities(currentPlayer, currentPlayer, size, treeSize);
-		MinMaxAlgorithm min= getMin(treeSize);
+		AlphaBetaAlgorithm min= getMin(treeSize);
 		changedX = min.getChangedX();
 		changedY = min.getChangedY();
 	}
 	
-	public MinMaxAlgorithm(int[][] tTable, int currentPlayer, int nextPlayer, int x, int y, int size, int treeSize)
+	public AlphaBetaAlgorithm(int[][] tTable, int currentPlayer, int nextPlayer, int x, int y, int size, int treeSize)
 	{
 		changedX = x;
 		changedY = y;
@@ -74,7 +74,7 @@ public class MinMaxAlgorithm
 		return changedY;
 	}
 	
-	public MinMaxAlgorithm getMin(int treeSize)
+	public AlphaBetaAlgorithm getMin(int treeSize)
 	{
 		if (treeSize>1)
 		{
@@ -95,7 +95,7 @@ public class MinMaxAlgorithm
 			return this;
 	}
 
-	public MinMaxAlgorithm getMax(int treeSize)
+	public AlphaBetaAlgorithm getMax(int treeSize)
 	{
 		if (treeSize>1)
 		{

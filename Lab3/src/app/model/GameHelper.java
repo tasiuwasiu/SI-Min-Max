@@ -73,6 +73,7 @@ public class GameHelper
 		aHelper.calculate(code);
 		bController.setTime(String.valueOf(aHelper.getTime() / 1000) + " s");
 		makeMove(aHelper.getXPosition(), aHelper.getYPosition());
+		System.out.println("FT: " + freeTokens + " , T: " + aHelper.getTime());
 	}
 	
 	public void humanMove(double x, double y)

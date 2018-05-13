@@ -12,7 +12,6 @@ import javafx.scene.text.Text;
 
 public class ButtonController
 {
-	
 	@FXML
 	Button but_size;
 	

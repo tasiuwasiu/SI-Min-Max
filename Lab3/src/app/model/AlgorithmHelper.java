@@ -1,27 +1,21 @@
 package app.model;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 public class AlgorithmHelper
 {
 	private int size;
 	private int[][] tokenTable;
+	private int treeSize;
 	
 	private int currentPlayer;
 	private int xPos;
 	private int yPos;
 	
-	private AlfaBetaAlgorithm abAlgorithm;
-	private MinMaxAlgorithm mmAlgorithm;
 	private long time;
 	
 	public AlgorithmHelper()
 	{
 		currentPlayer = GameHelper.NO_PLAYER;
-		abAlgorithm = new AlfaBetaAlgorithm();
-		mmAlgorithm = new MinMaxAlgorithm();
 	}
-	
 	
 	public void setData(int[][] t, int p, int s)
 	{
@@ -32,32 +26,36 @@ public class AlgorithmHelper
 			for (int j = 0; j < s; j++)
 				tokenTable[i][j] = t[i][j];
 		time = 0;
+		treeSize = 3;
 	}
 	
 	public void calculate(int code)
 	{
 		if(code == GameHelper.MIN_MAX)
 		{
-			xPos = ThreadLocalRandom.current().nextInt(0,size);
-			yPos = ThreadLocalRandom.current().nextInt(0,size);
-			time = 1000;
+			long start = System.currentTimeMillis(); 
+			MinMaxAlgorithm minMaxAlgorithm = new MinMaxAlgorithm(tokenTable, currentPlayer, size, treeSize);
+			xPos = minMaxAlgorithm.getChangedX();
+			yPos = minMaxAlgorithm.getChangedY();
+			long stop = System.currentTimeMillis();
+			time = start-stop;
 		}
 		else
 			if (code == GameHelper.ALFA_BETA)
 			{
-				xPos = ThreadLocalRandom.current().nextInt(0,size);
-				yPos = ThreadLocalRandom.current().nextInt(0,size);
-				time = 2000;
+				long start = System.currentTimeMillis();
+				AlphaBetaAlgorithm alphaBetaAlgorithm = new AlphaBetaAlgorithm(tokenTable, currentPlayer, size, treeSize);
+				xPos = alphaBetaAlgorithm.getChangedX();
+				yPos = alphaBetaAlgorithm.getChangedY();
+				long stop = System.currentTimeMillis();
+				time = start-stop;
 			}
 	}
 	
 	public void setTreeSize(int s)
 	{
 		if (s>0)
-		{	
-			mmAlgorithm.setTreeSize(s);
-			abAlgorithm.setTreeSize(s);
-		}
+			treeSize=s;
 	}
 	
 	public int getXPosition()

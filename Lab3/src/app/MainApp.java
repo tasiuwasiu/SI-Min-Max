@@ -75,7 +75,7 @@ public class MainApp extends Application {
 			AnchorPane gamePanel = (AnchorPane) loader.load();
 			rootLayout.setLeft(gamePanel);
 			gameController = loader.getController();
-			gameController.setApp(this, gHelper);
+			gameController.setApp(gHelper);
 			gHelper.setGController(gameController);
 		}
 		catch (IOException e)
