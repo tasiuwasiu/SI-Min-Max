@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-
 public class MinMaxAlgorithm
 {
-	
-	
 	private int changedX;
 	private int changedY;
 	private int tableValue;
@@ -17,17 +14,20 @@ public class MinMaxAlgorithm
 	
 	public MinMaxAlgorithm(int[][] tTable, int currentPlayer, int size, int treeSize)
 	{
+		treeSize--;
 		tokenTable = new int[size][size];
 		for (int i = 0; i < size; i++)
 			for (int j = 0; j < size; j++)
 				tokenTable[i][j] = tTable[i][j];
+		nextPossibilities = new ArrayList<>();
 		createPossibilities(currentPlayer, currentPlayer, size, treeSize);
 		MinMaxAlgorithm min= getMin(treeSize);
 		changedX = min.getChangedX();
 		changedY = min.getChangedY();
+		System.out.println(changedX + " , " + changedY);
 	}
 	
-	public MinMaxAlgorithm(int[][] tTable, int currentPlayer, int nextPlayer, int x, int y, int size, int treeSize)
+	private MinMaxAlgorithm(int[][] tTable, int currentPlayer, int nextPlayer, int x, int y, int size, int treeSize)
 	{
 		changedX = x;
 		changedY = y;
@@ -36,7 +36,7 @@ public class MinMaxAlgorithm
 			for (int j = 0; j < size; j++)
 				tokenTable[i][j] = tTable[i][j];
 		tokenTable[x][y] = nextPlayer;
-		calculateValue(currentPlayer);
+		
 		nextPossibilities = new ArrayList<>();
 		if (nextPlayer == GameHelper.GREEN_PLAYER)
 			createPossibilities(currentPlayer, GameHelper.RED_PLAYER, size, treeSize);
@@ -45,17 +45,27 @@ public class MinMaxAlgorithm
 		
 	}
 	
-	public void createPossibilities(int currentPlayer, int nextPlayer, int size, int treeSize) 
+	private void createPossibilities(int currentPlayer, int nextPlayer, int size, int treeSize) 
 	{
-		if(treeSize<0)
-			return;
-
-		
+		if(treeSize==1)
+			calculateValue(currentPlayer);
+		else
+		{
+			for (int i = 0; i < size; i++)
+				for (int j = 0; j < size; j++)
+				{
+					if (tokenTable[i][j] == GameHelper.NO_PLAYER)
+					{
+						nextPossibilities.add(new MinMaxAlgorithm(tokenTable, currentPlayer, nextPlayer, i, j, size, treeSize-1));
+					}
+				}
+		}	
 	}
 	
 	private void calculateValue(int currentPlayer)
 	{
 		// TODO value calc
+
 		tableValue = ThreadLocalRandom.current().nextInt(0,10);
 	}
 	
@@ -74,43 +84,43 @@ public class MinMaxAlgorithm
 		return changedY;
 	}
 	
-	public MinMaxAlgorithm getMin(int treeSize)
+	private MinMaxAlgorithm getMin(int treeSize)
 	{
 		if (treeSize>1)
 		{
 			int min = Integer.MAX_VALUE;
-			int index = 0;
-			for (int i=nextPossibilities.size(); i>=0; --i)
+			MinMaxAlgorithm minObject = null;
+			for (int i=nextPossibilities.size()-1; i>=0; i--)
 			{
-				int temp = nextPossibilities.get(i).getMax(treeSize-1).getValue();
-				if (temp < min)
+				MinMaxAlgorithm temp = nextPossibilities.get(i).getMax(treeSize-1);
+				if (temp.getValue() < min)
 				{
-					min = temp;
-					index = i;
+					min = temp.getValue();
+					minObject = temp;
 				}
 			}
-			return nextPossibilities.get(index);			
+			return minObject;			
 		}
 		else
 			return this;
 	}
 
-	public MinMaxAlgorithm getMax(int treeSize)
+	private MinMaxAlgorithm getMax(int treeSize)
 	{
 		if (treeSize>1)
 		{
 			int max = Integer.MIN_VALUE;
-			int index = 0;
-			for (int i=nextPossibilities.size(); i>=0; --i)
+			MinMaxAlgorithm maxObject = null;
+			for (int i=nextPossibilities.size(); i>0; --i)
 			{
-				int temp = nextPossibilities.get(i).getMin(treeSize-1).getValue();
-				if (temp > max)
+				MinMaxAlgorithm temp = nextPossibilities.get(i).getMin(treeSize-1);
+				if (temp.getValue() > max)
 				{
-					max = temp;
-					index = i;
+					max = temp.getValue();
+					maxObject = temp;
 				}
 			}
-			return nextPossibilities.get(index);			
+			return maxObject;			
 		}
 		else
 			return this;

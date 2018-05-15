@@ -52,7 +52,7 @@ public class ButtonController
 	private void initialize()
 	{
 		cb_tree_size.getItems().removeAll(cb_tree_size.getItems());
-		cb_tree_size.getItems().addAll(3,4,5,6,7);
+		cb_tree_size.getItems().addAll(3,4,5,6,7,8,9,10,11,12,13);
 		cb_tree_size.getSelectionModel().select(0);
 		cb_tree_size.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 			@Override

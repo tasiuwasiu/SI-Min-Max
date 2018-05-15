@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-
 public class AlphaBetaAlgorithm
 {
-	
-	
 	private int changedX;
 	private int changedY;
 	private int tableValue;
@@ -17,6 +14,7 @@ public class AlphaBetaAlgorithm
 	
 	public AlphaBetaAlgorithm(int[][] tTable, int currentPlayer, int size, int treeSize)
 	{
+		treeSize--;
 		tokenTable = new int[size][size];
 		for (int i = 0; i < size; i++)
 			for (int j = 0; j < size; j++)
@@ -36,7 +34,7 @@ public class AlphaBetaAlgorithm
 			for (int j = 0; j < size; j++)
 				tokenTable[i][j] = tTable[i][j];
 		tokenTable[x][y] = nextPlayer;
-		calculateValue(currentPlayer);
+		
 		nextPossibilities = new ArrayList<>();
 		if (nextPlayer == GameHelper.GREEN_PLAYER)
 			createPossibilities(currentPlayer, GameHelper.RED_PLAYER, size, treeSize);
@@ -47,8 +45,8 @@ public class AlphaBetaAlgorithm
 	
 	public void createPossibilities(int currentPlayer, int nextPlayer, int size, int treeSize) 
 	{
-		if(treeSize<0)
-			return;
+		if(treeSize<1)
+			calculateValue(currentPlayer);
 
 		
 	}

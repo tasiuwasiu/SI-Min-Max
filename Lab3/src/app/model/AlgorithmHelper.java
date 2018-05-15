@@ -38,7 +38,7 @@ public class AlgorithmHelper
 			xPos = minMaxAlgorithm.getChangedX();
 			yPos = minMaxAlgorithm.getChangedY();
 			long stop = System.currentTimeMillis();
-			time = start-stop;
+			time = stop-start;
 		}
 		else
 			if (code == GameHelper.ALFA_BETA)
@@ -48,7 +48,7 @@ public class AlgorithmHelper
 				xPos = alphaBetaAlgorithm.getChangedX();
 				yPos = alphaBetaAlgorithm.getChangedY();
 				long stop = System.currentTimeMillis();
-				time = start-stop;
+				time = stop-start;
 			}
 	}
 	

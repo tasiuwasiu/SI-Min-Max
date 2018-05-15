@@ -73,7 +73,7 @@ public class GameHelper
 		aHelper.calculate(code);
 		bController.setTime(String.valueOf(aHelper.getTime() / 1000) + " s");
 		makeMove(aHelper.getXPosition(), aHelper.getYPosition());
-		System.out.println("FT: " + freeTokens + " , T: " + aHelper.getTime());
+		System.out.println("FT: " + (freeTokens+1) + " , T: " + aHelper.getTime());
 	}
 	
 	public void humanMove(double x, double y)
@@ -286,8 +286,11 @@ public class GameHelper
 	
 	public void finishGameAsComputer (int code)
 	{
+		long start = System.currentTimeMillis();
 		while (freeTokens>0)
 			computerMove(code);
+		long stop = System.currentTimeMillis();
+		bController.setTime(String.valueOf((stop-start) / 1000) + " s");
 	}
 	
 	public void setTreeSize(int s)
