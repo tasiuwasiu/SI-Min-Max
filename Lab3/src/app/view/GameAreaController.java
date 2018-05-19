@@ -51,6 +51,7 @@ public class GameAreaController
 	public void placeToken(int x, int y, Paint color)
 	{
 		gContext.setFill(color);
-		gContext.fillOval((columnSize*x)+5, (columnSize*y)+5, columnSize-10, columnSize-10);
+		float offset = columnSize*0.1f;
+		gContext.fillOval((columnSize*x)+offset, (columnSize*y)+offset, columnSize-(offset*2), columnSize-(offset*2));
 	}
 }

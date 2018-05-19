@@ -71,9 +71,12 @@ public class GameHelper
 		
 		aHelper.setData(tokenTable, currentPlayer, size);
 		aHelper.calculate(code);
-		bController.setTime(String.valueOf(aHelper.getTime() / 1000) + " s");
-		makeMove(aHelper.getXPosition(), aHelper.getYPosition());
-		System.out.println("FT: " + (freeTokens+1) + " , T: " + aHelper.getTime());
+		if (!Thread.currentThread().isInterrupted())
+		{
+			bController.setTime(String.valueOf(aHelper.getTime() / 1000.0f) + " s");
+			makeMove(aHelper.getXPosition(), aHelper.getYPosition());
+			System.out.println("FT: " + (freeTokens+1) + " , T: " + aHelper.getTime());
+		}
 	}
 	
 	public void humanMove(double x, double y)
@@ -288,9 +291,13 @@ public class GameHelper
 	{
 		long start = System.currentTimeMillis();
 		while (freeTokens>0)
+		{
+			if (Thread.currentThread().isInterrupted())
+				break;
 			computerMove(code);
+		}
 		long stop = System.currentTimeMillis();
-		bController.setTime(String.valueOf((stop-start) / 1000) + " s");
+		bController.setTime(String.valueOf((stop-start) / 1000.0f) + " s");
 	}
 	
 	public void setTreeSize(int s)

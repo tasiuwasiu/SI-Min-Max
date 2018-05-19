@@ -21,7 +21,7 @@ public class MinMaxAlgorithm
 				tokenTable[i][j] = tTable[i][j];
 		nextPossibilities = new ArrayList<>();
 		createPossibilities(currentPlayer, currentPlayer, size, treeSize);
-		MinMaxAlgorithm min= getMin(treeSize);
+		MinMaxAlgorithm min= getBest(treeSize);
 		changedX = min.getChangedX();
 		changedY = min.getChangedY();
 		System.out.println(changedX + " , " + changedY);
@@ -65,8 +65,17 @@ public class MinMaxAlgorithm
 	private void calculateValue(int currentPlayer)
 	{
 		// TODO value calc
-
-		tableValue = ThreadLocalRandom.current().nextInt(0,10);
+		/*
+		try
+		{
+			Thread.sleep(10);
+		} catch (InterruptedException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
+		tableValue = ThreadLocalRandom.current().nextInt(500);
 	}
 	
 	public int getValue()
@@ -84,6 +93,37 @@ public class MinMaxAlgorithm
 		return changedY;
 	}
 	
+	public void setChangedX(int x)
+	{
+		changedX=x;
+	}
+	
+	public void setChangedY(int y)
+	{
+		changedY=y;
+	}
+	
+	private MinMaxAlgorithm getBest(int treeSize)
+	{
+		if (treeSize>1)
+		{
+			int min = Integer.MAX_VALUE;
+			MinMaxAlgorithm minObject = null;
+			for (int i=nextPossibilities.size()-1; i>=0; i--)
+			{
+				MinMaxAlgorithm temp = nextPossibilities.get(i).getMax(treeSize-1);
+				if (temp.getValue() < min)
+				{
+					min = temp.getValue();
+					minObject = temp;
+				}
+			}
+			return minObject;			
+		}
+		else
+			return this;
+	}
+	
 	private MinMaxAlgorithm getMin(int treeSize)
 	{
 		if (treeSize>1)
@@ -99,6 +139,8 @@ public class MinMaxAlgorithm
 					minObject = temp;
 				}
 			}
+			minObject.setChangedX(changedX);
+			minObject.setChangedY(changedY);
 			return minObject;			
 		}
 		else
@@ -120,6 +162,8 @@ public class MinMaxAlgorithm
 					maxObject = temp;
 				}
 			}
+			maxObject.setChangedX(changedX);
+			maxObject.setChangedY(changedY);
 			return maxObject;			
 		}
 		else
