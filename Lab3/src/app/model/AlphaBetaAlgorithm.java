@@ -269,6 +269,16 @@ public class AlphaBetaAlgorithm
 		changedY=y;
 	}
 
+	public void setAlpha(int a)
+	{
+		alpha=a;
+	}
+	
+	public void setBeta(int b)
+	{
+		beta = b;
+	}
+	
 	private AlphaBetaAlgorithm getBest(int treeSize)
 	{
 		if(nextPossibilities.isEmpty())
@@ -279,12 +289,20 @@ public class AlphaBetaAlgorithm
 			AlphaBetaAlgorithm minObject = null;
 			for (int i=nextPossibilities.size()-1; i>=0; i--)
 			{
+				nextPossibilities.get(i).setBeta(beta);
 				AlphaBetaAlgorithm temp = nextPossibilities.get(i).getMax(treeSize-1);
 				if (temp.getValue() < min)
 				{
+					beta = Math.min(beta, temp.getBeta());
 					min = temp.getValue();
 					minObject = temp;
+					
 				}
+				if (alpha>=beta)
+				{
+					break;
+				}
+				
 			}
 			return minObject;			
 		}
@@ -309,28 +327,34 @@ public class AlphaBetaAlgorithm
 			AlphaBetaAlgorithm minObject = null;
 			for (int i=nextPossibilities.size()-1; i>=0; i--)
 			{
+				nextPossibilities.get(i).setBeta(beta);
 				temp = nextPossibilities.get(i).getMax(treeSize-1);
 				if (temp.getValue() < min)
 				{
-					alpha = temp.getBeta();
+					beta = Math.min(beta, temp.getBeta());
 					min = temp.getValue();
 					minObject = temp;
+					
 				}
 				if (alpha>=beta)
 				{
-					nextPossibilities.clear();
-					minObject.setChangedX(changedX);
-					minObject.setChangedY(changedY);
-					return minObject;
+					break;
 				}
+				
 			}
 			nextPossibilities.clear();
+			minObject.setAlpha(alpha);
+			minObject.setBeta(beta);
 			minObject.setChangedX(changedX);
 			minObject.setChangedY(changedY);
 			return minObject;			
 		}
 		else
+		{
+			setAlpha(tableValue);
+			setBeta(tableValue);
 			return this;
+		}
 	}
 
 	public AlphaBetaAlgorithm getMax(int treeSize)
@@ -347,30 +371,37 @@ public class AlphaBetaAlgorithm
 			int max = Integer.MIN_VALUE;
 			AlphaBetaAlgorithm temp;
 			AlphaBetaAlgorithm maxObject = null;
-			for (int i=nextPossibilities.size(); i>0; --i)
+			for (int i=nextPossibilities.size()-1; i>=0; i--)
 			{
+				nextPossibilities.get(i).setAlpha(alpha);
 				temp = nextPossibilities.get(i).getMin(treeSize-1);
 				if (temp.getValue() > max)
 				{
-					beta = temp.getAlpha();
+					alpha = Math.max(alpha, temp.getBeta());
 					max = temp.getValue();
 					maxObject = temp;
+					
 				}
-				
 				if(alpha>=beta)
 				{
-					nextPossibilities.clear();
-					maxObject.setChangedX(changedX);
-					maxObject.setChangedY(changedY);
-					return maxObject;
+					break;
 				}
+				
+				
 			}
+			nextPossibilities.clear();
+			maxObject.setAlpha(alpha);
+			maxObject.setBeta(beta);
 			maxObject.setChangedX(changedX);
 			maxObject.setChangedY(changedY);
 			return maxObject;			
 		}
 		else
+		{
+			setAlpha(tableValue);
+			setBeta(tableValue);
 			return this;
+		}
 	}
 	
 	

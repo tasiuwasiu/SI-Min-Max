@@ -76,6 +76,13 @@ public class GameHelper
 			bController.setTime(String.valueOf(aHelper.getTime() / 1000.0f) + " s");
 			makeMove(aHelper.getXPosition(), aHelper.getYPosition());
 			System.out.println((freeTokens+1) + " ,  " + aHelper.getTime());
+			try
+			{
+				Thread.sleep(10);
+			} catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -290,13 +297,14 @@ public class GameHelper
 	public void finishGameAsComputer (int code)
 	{
 		long start = System.currentTimeMillis();
+		long drawTime = freeTokens*10;
 		while (freeTokens>0)
 		{
 			if (Thread.currentThread().isInterrupted())
 				break;
 			computerMove(code);	
 		}
-		long stop = System.currentTimeMillis();
+		long stop = System.currentTimeMillis()-drawTime;
 		bController.setTime(String.valueOf((stop-start) / 1000.0f) + " s");
 	}
 	
