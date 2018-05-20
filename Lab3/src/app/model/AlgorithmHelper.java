@@ -2,11 +2,13 @@ package app.model;
 
 public class AlgorithmHelper
 {
-	private int size;
-	private int[][] tokenTable;
-	private int treeSize;
+	public static final int AGGRESSIVENESS = 2;
 	
-	private int currentPlayer;
+	private int size;
+	private byte[][] tokenTable;
+	private int treeSize=3;
+	
+	private byte currentPlayer;
 	private int xPos;
 	private int yPos;
 	
@@ -17,24 +19,24 @@ public class AlgorithmHelper
 		currentPlayer = GameHelper.NO_PLAYER;
 	}
 	
-	public void setData(int[][] t, int p, int s)
+	public void setData(byte[][] t, byte p, int s)
 	{
 		size = s;
 		currentPlayer = p;
-		tokenTable = new int[size][size];
+		time = 0;
+		
+		tokenTable = new byte[size][size];
 		for (int i = 0; i < s; i++)
 			for (int j = 0; j < s; j++)
 				tokenTable[i][j] = t[i][j];
-		time = 0;
-		treeSize = 3;
 	}
 	
-	public void calculate(int code)
+	public void calculate(int code, int freeTokens)
 	{
 		if(code == GameHelper.MIN_MAX)
 		{
 			long start = System.currentTimeMillis(); 
-			MinMaxAlgorithm minMaxAlgorithm = new MinMaxAlgorithm(tokenTable, currentPlayer, size, treeSize);
+			MinMaxAlgorithm minMaxAlgorithm = new MinMaxAlgorithm(tokenTable, currentPlayer, size, treeSize, freeTokens);
 			xPos = minMaxAlgorithm.getChangedX();
 			yPos = minMaxAlgorithm.getChangedY();
 			long stop = System.currentTimeMillis();
@@ -44,7 +46,7 @@ public class AlgorithmHelper
 			if (code == GameHelper.ALFA_BETA)
 			{
 				long start = System.currentTimeMillis();
-				AlphaBetaAlgorithm alphaBetaAlgorithm = new AlphaBetaAlgorithm(tokenTable, currentPlayer, size, treeSize);
+				AlphaBetaAlgorithm alphaBetaAlgorithm = new AlphaBetaAlgorithm(tokenTable, currentPlayer, size, treeSize, freeTokens);
 				xPos = alphaBetaAlgorithm.getChangedX();
 				yPos = alphaBetaAlgorithm.getChangedY();
 				long stop = System.currentTimeMillis();
@@ -72,5 +74,6 @@ public class AlgorithmHelper
 	{
 		return time;
 	}
+	
 	
 }

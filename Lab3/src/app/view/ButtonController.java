@@ -1,12 +1,9 @@
 package app.view;
 
-import javax.print.attribute.standard.RequestingUserName;
-
 import app.MainApp;
 import app.model.GameHelper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -51,13 +48,11 @@ public class ButtonController
 	MainApp application;
 	GameHelper gHelper;
 	
-	Thread compThread;
-	
 	@FXML
 	private void initialize()
 	{
 		cb_tree_size.getItems().removeAll(cb_tree_size.getItems());
-		cb_tree_size.getItems().addAll(3,4,5,6,7,8,9,10,11,12,13);
+		cb_tree_size.getItems().addAll(3,4,5,6,7,8,9,10,11);
 		cb_tree_size.getSelectionModel().select(0);
 		cb_tree_size.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 			@Override
@@ -85,14 +80,6 @@ public class ButtonController
 	@FXML
 	public void handleSizeSet()
 	{
-		try
-		{
-			compThread.interrupt();
-		}
-		catch (NullPointerException e)
-		{
-			System.out.println("No thread assigned");
-		}
 		application.setGameSize(getSize());
 	}
 	
@@ -117,31 +104,13 @@ public class ButtonController
 	@FXML
 	private void minMaxfinish()
 	{
-		Task<Void> task = new Task<Void> () {
-			@Override
-			protected Void call() throws Exception
-			{
-				gHelper.finishGameAsComputer(GameHelper.MIN_MAX);
-				return null;
-			}
-		};
-		compThread = new Thread(task);
-		compThread.start();
-		}
+		application.finishAsComputer(GameHelper.MIN_MAX);
+	}
 	
 	@FXML
 	private void alfaBetaFinish()
 	{
-		Task<Void> task = new Task<Void> () {
-			@Override
-			protected Void call() throws Exception
-			{
-				gHelper.finishGameAsComputer(GameHelper.ALFA_BETA);
-				return null;
-			}
-		};
-		compThread = new Thread(task);
-		compThread.start();
+		application.finishAsComputer(GameHelper.ALFA_BETA);
 	}
 	
 	public void setApp(MainApp app, GameHelper h)

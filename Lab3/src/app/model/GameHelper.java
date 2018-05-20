@@ -6,9 +6,9 @@ import javafx.scene.paint.Color;
 
 public class GameHelper
 {
-	public final static int NO_PLAYER = 0;
-	public final static int GREEN_PLAYER = 1;
-	public final static int RED_PLAYER = 2;
+	public final static byte NO_PLAYER = 0;
+	public final static byte GREEN_PLAYER = 1;
+	public final static byte RED_PLAYER = 2;
 	
 	public final static int MIN_MAX = 10;
 	public final static int ALFA_BETA = 20;
@@ -17,11 +17,11 @@ public class GameHelper
 	private float columnSize;
 	private int freeTokens;
 	
-	private int currentPlayer = RED_PLAYER;
+	private byte currentPlayer = RED_PLAYER;
 	private int redScore;
 	private int greenScore;
 	
-	private int[][] tokenTable;
+	private byte[][] tokenTable;
 
 	private GameAreaController gaController;
 	private ButtonController bController;
@@ -52,7 +52,7 @@ public class GameHelper
 		bController.setPlayer("Czerwony");
 		bController.setRedPlayerScore(String.valueOf(redScore));
 		bController.setGreenPlayerScore(String.valueOf(greenScore));
-		tokenTable = new int[size][size];
+		tokenTable = new byte[size][size];
 		clearTable();
 	}
 	
@@ -70,12 +70,12 @@ public class GameHelper
 			return;
 		
 		aHelper.setData(tokenTable, currentPlayer, size);
-		aHelper.calculate(code);
+		aHelper.calculate(code, freeTokens);
 		if (!Thread.currentThread().isInterrupted())
 		{
 			bController.setTime(String.valueOf(aHelper.getTime() / 1000.0f) + " s");
 			makeMove(aHelper.getXPosition(), aHelper.getYPosition());
-			System.out.println("FT: " + (freeTokens+1) + " , T: " + aHelper.getTime());
+			System.out.println((freeTokens+1) + " ,  " + aHelper.getTime());
 		}
 	}
 	
@@ -294,7 +294,7 @@ public class GameHelper
 		{
 			if (Thread.currentThread().isInterrupted())
 				break;
-			computerMove(code);
+			computerMove(code);	
 		}
 		long stop = System.currentTimeMillis();
 		bController.setTime(String.valueOf((stop-start) / 1000.0f) + " s");

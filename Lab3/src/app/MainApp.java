@@ -6,6 +6,7 @@ import app.model.GameHelper;
 import app.view.ButtonController;
 import app.view.GameAreaController;
 import javafx.application.Application;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -19,6 +20,7 @@ public class MainApp extends Application {
 	private GameAreaController gameController;
 	private ButtonController buttonController;
 	private GameHelper gHelper;
+	private Thread compThread;
 	
 	@Override
 	public void start(Stage primaryStage) 
@@ -86,6 +88,14 @@ public class MainApp extends Application {
 	
 	public void setGameSize(int number)
 	{
+		try
+		{
+			compThread.interrupt();
+		}
+		catch (NullPointerException e)
+		{
+			System.out.println("No thread assigned");
+		}
 		gHelper.setSize(number);
 		gameController.drawLines(number);
 	}
@@ -94,6 +104,23 @@ public class MainApp extends Application {
 	{
 		return primaryStage;
 	}
+	
+	public void finishAsComputer(int code)
+	{
+		Task<Void> task = new Task<Void> () {
+			@Override
+			protected Void call() throws Exception
+			{
+				gHelper.finishGameAsComputer(code);
+				return null;
+			}
+		
+		};
+		compThread = new Thread(task);
+		compThread.start();
+	
+	}
+	
 	
 	public static void main(String[] args) 
 	{
